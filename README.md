@@ -1,5 +1,5 @@
 # Youtube Download DSS
-•DOWNLOAD: https://github.com/DanielSvoboda/Youtube_Download/blob/main/Youtube_Download_DSS.exe
+•DOWNLOAD: https://github.com/DanielSvoboda/Youtube_Download/raw/main/Youtube_Download_DSS.exe
 <br><br>
 Programa em C# windows forms .NET Framework 4.7.2
 <br><br>
