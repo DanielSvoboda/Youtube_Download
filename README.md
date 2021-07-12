@@ -1,4 +1,6 @@
 # Youtube Download DSS
+•DOWNLOAD: https://github.com/DanielSvoboda/Youtube_Download/blob/main/Youtube_Download_DSS.exe
+<br><br>
 Programa em C# windows forms .NET Framework 4.7.2
 <br><br>
 Com o objetivo de realizar:
@@ -10,17 +12,23 @@ Com o objetivo de realizar:
   •Ser portátil, sem um instalador, tendo apenas 2 .exe:
   <br>O proprio Youtube_Download_DSS.exe e o ffmpeg.exe que é exportado para AppData\Local
   <br>
- #### Depêndencia 
-  •VideoLibrary <https://www.nuget.org/packages/VideoLibrary>
+  
+Depêndencia 
+---------  
   <br>
-  •Costura.Fody <https://www.nuget.org/packages/Costura.Fody/>
+  •VideoLibrary https://www.nuget.org/packages/VideoLibrary
+  <br>
+  •Costura.Fody https://www.nuget.org/packages/Costura.Fody
 <br><br><br>
-<br>Download<br>
-<img width="500" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/1.png">
+  
+Print's
+---------  
+Download<br>
+<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/1.png">
 <br>Converter<br>
-<img width="500" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/2.png">
+<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/2.png">
 <br>Sobre<br>
-<img width="500" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/3.png">
+<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/3.png">
 <br><br><br>
 
 FFmpeg
@@ -117,9 +125,6 @@ This build was compiled with the following external libraries:<br>
   zlib 1.2.8 <http://zlib.net/><br>
 <br><br>
 The source code for this FFmpeg build can be found at: <http://ffmpeg.zeranoe.com/builds/source/><br>
-<br>
 This build was compiled on Debian jessie/sid (64-bit): <http://www.debian.org/><br>
-<br>
 GCC 4.8.2 was used to compile this FFmpeg build: <http://gcc.gnu.org/><br>
-<br>
 This build was compiled using the MinGW-w64 toolchain: <http://mingw-w64.sourceforge.net/><br>
