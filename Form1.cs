@@ -17,10 +17,11 @@ namespace Youtube_Download_01
         {
             InitializeComponent();
             this.Size = new Size(383, 193);
+            Show();
             //localFfmpeg = Settings.Default["LocalFfmpeg"].ToString();
             //textBox_LocalFfmpeg.Text = Settings.Default["LocalFfmpeg"].ToString();    //textbox carrega do save
-
         }
+
 
         //string novo_local = Settings.Default["LocalFfmpeg"].ToString();
 
@@ -31,7 +32,7 @@ namespace Youtube_Download_01
         string diretorio_conv_out = "";
         string nome_do_titulo = "";
 
-        string versao = "2"; 
+        string versao = "3"; 
 
         byte[] outputBytes = null;      // "ffmpeg_empacotado_pra_viagem" descompactado
 
@@ -327,17 +328,37 @@ namespace Youtube_Download_01
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    var dialog = new SaveFileDialog();
-                    dialog.Filter = "Arquivo (*.exe)|*.exe";
-                    dialog.Title = "Escolha um local para salvar a nova verção";
-                    dialog.FileName = "Youtube_Download_DSS" + conteudo;                    
+                    var dir = Directory.GetCurrentDirectory();
+                    var nome_antigo = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe"; 
+                    var nome_novo = Directory.GetCurrentDirectory() + @"\Youtube_Download_DSS" + conteudo + ".exe";
+
+                    var wClient = new WebClient();
+                    wClient.DownloadFile(url_exe, nome_novo);
+
+                    MessageBox.Show("Download concluído!");
+            
+                    // inicia uma therd fecha o programa, espera 3 segundos, apaga o antigo, renomeia o novo com o mesmo nome do antigo e abre ele  :)
+                    Process.Start(new ProcessStartInfo()
                     {
-                        if (dialog.ShowDialog() == DialogResult.OK)
-                        {
-                            var wClient = new WebClient();
-                            wClient.DownloadFile(url_exe, dialog.FileName);
-                        }
-                    }
+                        Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + dir + "\\"+ nome_antigo + "\"" + " & ren \"" + nome_novo + "\"" + " " + "\"" + nome_antigo + "\"" + " & start /d " + "\"" + dir + "\"" + " " + nome_antigo ,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                        FileName = "cmd.exe"
+                    });;
+
+                    Application.Exit();
+
+                    //var dialog = new SaveFileDialog();
+                    //dialog.Filter = "Arquivo (*.exe)|*.exe";
+                    //dialog.Title = "Escolha um local para salvar a nova verção";
+                    //dialog.FileName = "Youtube_Download_DSS" + conteudo;                    
+                    //{
+                    //    if (dialog.ShowDialog() == DialogResult.OK)
+                    //    {
+                    //        var wClient = new WebClient();
+                    //        wClient.DownloadFile(url_exe, dialog.FileName);
+                    //    }
+                    //}
                 }
             } 
             else

@@ -74,153 +74,111 @@
             // 
             // textBox_link_do_youtube
             // 
-            this.textBox_link_do_youtube.Location = new System.Drawing.Point(11, 19);
+            resources.ApplyResources(this.textBox_link_do_youtube, "textBox_link_do_youtube");
             this.textBox_link_do_youtube.Name = "textBox_link_do_youtube";
-            this.textBox_link_do_youtube.Size = new System.Drawing.Size(262, 20);
-            this.textBox_link_do_youtube.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.textBox_link_do_youtube, resources.GetString("textBox_link_do_youtube.ToolTip"));
             // 
             // Botao_baixar
             // 
+            resources.ApplyResources(this.Botao_baixar, "Botao_baixar");
             this.Botao_baixar.BackColor = System.Drawing.Color.SpringGreen;
             this.Botao_baixar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Botao_baixar.Location = new System.Drawing.Point(11, 74);
             this.Botao_baixar.Name = "Botao_baixar";
-            this.Botao_baixar.Size = new System.Drawing.Size(56, 20);
-            this.Botao_baixar.TabIndex = 1;
-            this.Botao_baixar.Text = "BAIXAR";
+            this.toolTip1.SetToolTip(this.Botao_baixar, resources.GetString("Botao_baixar.ToolTip"));
             this.Botao_baixar.UseVisualStyleBackColor = false;
             this.Botao_baixar.Click += new System.EventHandler(this.Botao_baixar_async);
             // 
             // radioButton_audio
             // 
-            this.radioButton_audio.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radioButton_audio.AutoSize = true;
+            resources.ApplyResources(this.radioButton_audio, "radioButton_audio");
             this.radioButton_audio.Checked = true;
             this.radioButton_audio.Cursor = System.Windows.Forms.Cursors.Default;
             this.radioButton_audio.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.radioButton_audio.Location = new System.Drawing.Point(84, 45);
             this.radioButton_audio.Name = "radioButton_audio";
-            this.radioButton_audio.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.radioButton_audio.Size = new System.Drawing.Size(92, 23);
-            this.radioButton_audio.TabIndex = 2;
             this.radioButton_audio.TabStop = true;
-            this.radioButton_audio.Text = "AUDIO (MP3)";
+            this.toolTip1.SetToolTip(this.radioButton_audio, resources.GetString("radioButton_audio.ToolTip"));
             this.radioButton_audio.UseVisualStyleBackColor = true;
             this.radioButton_audio.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton_video
             // 
-            this.radioButton_video.Appearance = System.Windows.Forms.Appearance.Button;
-            this.radioButton_video.AutoSize = true;
+            resources.ApplyResources(this.radioButton_video, "radioButton_video");
             this.radioButton_video.Cursor = System.Windows.Forms.Cursors.Default;
-            this.radioButton_video.Location = new System.Drawing.Point(182, 45);
             this.radioButton_video.Name = "radioButton_video";
-            this.radioButton_video.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.radioButton_video.Size = new System.Drawing.Size(91, 23);
-            this.radioButton_video.TabIndex = 3;
-            this.radioButton_video.Text = "VÍDEO (MP4)";
+            this.toolTip1.SetToolTip(this.radioButton_video, resources.GetString("radioButton_video.ToolTip"));
             this.radioButton_video.UseVisualStyleBackColor = true;
             this.radioButton_video.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // label_formatos
             // 
-            this.label_formatos.AutoSize = true;
-            this.label_formatos.Location = new System.Drawing.Point(8, 50);
+            resources.ApplyResources(this.label_formatos, "label_formatos");
             this.label_formatos.Name = "label_formatos";
-            this.label_formatos.Size = new System.Drawing.Size(70, 13);
-            this.label_formatos.TabIndex = 4;
-            this.label_formatos.Text = "FORMATOS:";
+            this.toolTip1.SetToolTip(this.label_formatos, resources.GetString("label_formatos.ToolTip"));
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(84, 74);
+            resources.ApplyResources(this.progressBar1, "progressBar1");
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(189, 20);
-            this.progressBar1.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.progressBar1, resources.GetString("progressBar1.ToolTip"));
             // 
             // label_nomeDoVideo
             // 
-            this.label_nomeDoVideo.AutoSize = true;
-            this.label_nomeDoVideo.Location = new System.Drawing.Point(8, 97);
+            resources.ApplyResources(this.label_nomeDoVideo, "label_nomeDoVideo");
             this.label_nomeDoVideo.Name = "label_nomeDoVideo";
-            this.label_nomeDoVideo.Size = new System.Drawing.Size(36, 13);
-            this.label_nomeDoVideo.TabIndex = 6;
-            this.label_nomeDoVideo.Text = "Titulo:";
+            this.toolTip1.SetToolTip(this.label_nomeDoVideo, resources.GetString("label_nomeDoVideo.ToolTip"));
             // 
             // pictureBox_botaoYoutube
             // 
-            this.pictureBox_botaoYoutube.AccessibleDescription = "";
+            resources.ApplyResources(this.pictureBox_botaoYoutube, "pictureBox_botaoYoutube");
             this.pictureBox_botaoYoutube.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_botaoYoutube.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_botaoYoutube.Image")));
-            this.pictureBox_botaoYoutube.Location = new System.Drawing.Point(279, 45);
             this.pictureBox_botaoYoutube.Name = "pictureBox_botaoYoutube";
-            this.pictureBox_botaoYoutube.Size = new System.Drawing.Size(61, 49);
-            this.pictureBox_botaoYoutube.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox_botaoYoutube.TabIndex = 8;
             this.pictureBox_botaoYoutube.TabStop = false;
-            this.toolTip1.SetToolTip(this.pictureBox_botaoYoutube, "Abrir o Youtube");
+            this.toolTip1.SetToolTip(this.pictureBox_botaoYoutube, resources.GetString("pictureBox_botaoYoutube.ToolTip"));
             this.pictureBox_botaoYoutube.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // linkLabel_colar
             // 
-            this.linkLabel_colar.AutoSize = true;
-            this.linkLabel_colar.Location = new System.Drawing.Point(276, 22);
+            resources.ApplyResources(this.linkLabel_colar, "linkLabel_colar");
             this.linkLabel_colar.Name = "linkLabel_colar";
-            this.linkLabel_colar.Size = new System.Drawing.Size(31, 13);
-            this.linkLabel_colar.TabIndex = 4;
             this.linkLabel_colar.TabStop = true;
-            this.linkLabel_colar.Text = "Colar";
-            this.toolTip1.SetToolTip(this.linkLabel_colar, "Colar link do vídeo");
+            this.toolTip1.SetToolTip(this.linkLabel_colar, resources.GetString("linkLabel_colar.ToolTip"));
             this.linkLabel_colar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked_1);
             // 
             // linkLabel_github
             // 
-            this.linkLabel_github.AutoSize = true;
-            this.linkLabel_github.Location = new System.Drawing.Point(6, 29);
+            resources.ApplyResources(this.linkLabel_github, "linkLabel_github");
             this.linkLabel_github.Name = "linkLabel_github";
-            this.linkLabel_github.Size = new System.Drawing.Size(173, 13);
-            this.linkLabel_github.TabIndex = 2;
             this.linkLabel_github.TabStop = true;
-            this.linkLabel_github.Text = "https://github.com/DanielSvoboda";
-            this.toolTip1.SetToolTip(this.linkLabel_github, "https://github.com/DanielSvoboda");
+            this.toolTip1.SetToolTip(this.linkLabel_github, resources.GetString("linkLabel_github.ToolTip"));
             this.linkLabel_github.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // linkLabel_videolibrary
             // 
-            this.linkLabel_videolibrary.AutoSize = true;
-            this.linkLabel_videolibrary.Location = new System.Drawing.Point(256, 29);
+            resources.ApplyResources(this.linkLabel_videolibrary, "linkLabel_videolibrary");
             this.linkLabel_videolibrary.Name = "linkLabel_videolibrary";
-            this.linkLabel_videolibrary.Size = new System.Drawing.Size(65, 13);
-            this.linkLabel_videolibrary.TabIndex = 5;
             this.linkLabel_videolibrary.TabStop = true;
-            this.linkLabel_videolibrary.Text = "VideoLibrary";
-            this.toolTip1.SetToolTip(this.linkLabel_videolibrary, "https://www.nuget.org/packages/VideoLibrary");
+            this.toolTip1.SetToolTip(this.linkLabel_videolibrary, resources.GetString("linkLabel_videolibrary.ToolTip"));
             this.linkLabel_videolibrary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // linkLabel1
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(256, 45);
+            resources.ApplyResources(this.linkLabel1, "linkLabel1");
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(69, 13);
-            this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Costura.Fody";
-            this.toolTip1.SetToolTip(this.linkLabel1, "https://www.nuget.org/packages/VideoLibrary");
+            this.toolTip1.SetToolTip(this.linkLabel1, resources.GetString("linkLabel1.ToolTip"));
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked_2);
             // 
             // escolher_conv_input
             // 
-            this.escolher_conv_input.Location = new System.Drawing.Point(17, 32);
+            resources.ApplyResources(this.escolher_conv_input, "escolher_conv_input");
             this.escolher_conv_input.Name = "escolher_conv_input";
-            this.escolher_conv_input.Size = new System.Drawing.Size(134, 20);
-            this.escolher_conv_input.TabIndex = 16;
-            this.escolher_conv_input.Text = "ESCOLHER VÍDEO";
+            this.toolTip1.SetToolTip(this.escolher_conv_input, resources.GetString("escolher_conv_input.ToolTip"));
             this.escolher_conv_input.UseVisualStyleBackColor = true;
             this.escolher_conv_input.Click += new System.EventHandler(this.escolher_conv_input_Click);
             // 
             // GRUPO_DOWNLOAD
             // 
+            resources.ApplyResources(this.GRUPO_DOWNLOAD, "GRUPO_DOWNLOAD");
             this.GRUPO_DOWNLOAD.Controls.Add(this.pictureBox_botaoYoutube);
             this.GRUPO_DOWNLOAD.Controls.Add(this.linkLabel_colar);
             this.GRUPO_DOWNLOAD.Controls.Add(this.textBox_link_do_youtube);
@@ -230,202 +188,163 @@
             this.GRUPO_DOWNLOAD.Controls.Add(this.label_formatos);
             this.GRUPO_DOWNLOAD.Controls.Add(this.progressBar1);
             this.GRUPO_DOWNLOAD.Controls.Add(this.label_nomeDoVideo);
-            this.GRUPO_DOWNLOAD.Location = new System.Drawing.Point(12, 27);
             this.GRUPO_DOWNLOAD.Name = "GRUPO_DOWNLOAD";
-            this.GRUPO_DOWNLOAD.Size = new System.Drawing.Size(346, 117);
-            this.GRUPO_DOWNLOAD.TabIndex = 17;
             this.GRUPO_DOWNLOAD.TabStop = false;
+            this.toolTip1.SetToolTip(this.GRUPO_DOWNLOAD, resources.GetString("GRUPO_DOWNLOAD.ToolTip"));
             // 
             // GRUPO_CONVERTER
             // 
+            resources.ApplyResources(this.GRUPO_CONVERTER, "GRUPO_CONVERTER");
             this.GRUPO_CONVERTER.Controls.Add(this.MODO_AVANCADO);
             this.GRUPO_CONVERTER.Controls.Add(this.MODO_NORMAL);
             this.GRUPO_CONVERTER.Controls.Add(this.label_TITULO_CONV);
             this.GRUPO_CONVERTER.Controls.Add(this.botao_converter);
             this.GRUPO_CONVERTER.Controls.Add(this.escolher_conv_input);
-            this.GRUPO_CONVERTER.Location = new System.Drawing.Point(6, 173);
             this.GRUPO_CONVERTER.Name = "GRUPO_CONVERTER";
-            this.GRUPO_CONVERTER.Size = new System.Drawing.Size(346, 117);
-            this.GRUPO_CONVERTER.TabIndex = 18;
             this.GRUPO_CONVERTER.TabStop = false;
-            this.GRUPO_CONVERTER.Visible = false;
+            this.toolTip1.SetToolTip(this.GRUPO_CONVERTER, resources.GetString("GRUPO_CONVERTER.ToolTip"));
             // 
             // MODO_AVANCADO
             // 
-            this.MODO_AVANCADO.Enabled = false;
-            this.MODO_AVANCADO.Location = new System.Drawing.Point(266, 91);
+            resources.ApplyResources(this.MODO_AVANCADO, "MODO_AVANCADO");
             this.MODO_AVANCADO.Name = "MODO_AVANCADO";
-            this.MODO_AVANCADO.Size = new System.Drawing.Size(74, 20);
-            this.MODO_AVANCADO.TabIndex = 19;
-            this.MODO_AVANCADO.Text = "AVANÇADO";
+            this.toolTip1.SetToolTip(this.MODO_AVANCADO, resources.GetString("MODO_AVANCADO.ToolTip"));
             this.MODO_AVANCADO.UseVisualStyleBackColor = true;
             this.MODO_AVANCADO.Click += new System.EventHandler(this.MODO_AVANCADO_Click);
             // 
             // MODO_NORMAL
             // 
-            this.MODO_NORMAL.Enabled = false;
-            this.MODO_NORMAL.Location = new System.Drawing.Point(193, 91);
+            resources.ApplyResources(this.MODO_NORMAL, "MODO_NORMAL");
             this.MODO_NORMAL.Name = "MODO_NORMAL";
-            this.MODO_NORMAL.Size = new System.Drawing.Size(67, 20);
-            this.MODO_NORMAL.TabIndex = 18;
-            this.MODO_NORMAL.Text = "NORMAL";
+            this.toolTip1.SetToolTip(this.MODO_NORMAL, resources.GetString("MODO_NORMAL.ToolTip"));
             this.MODO_NORMAL.UseVisualStyleBackColor = true;
             this.MODO_NORMAL.Click += new System.EventHandler(this.MODO_NORMAL_Click);
             // 
             // label_TITULO_CONV
             // 
-            this.label_TITULO_CONV.AutoSize = true;
-            this.label_TITULO_CONV.Location = new System.Drawing.Point(32, 16);
+            resources.ApplyResources(this.label_TITULO_CONV, "label_TITULO_CONV");
             this.label_TITULO_CONV.Name = "label_TITULO_CONV";
-            this.label_TITULO_CONV.Size = new System.Drawing.Size(287, 13);
-            this.label_TITULO_CONV.TabIndex = 9;
-            this.label_TITULO_CONV.Text = "CONVERTER UM ARQUIVO DE VÍDEO EM AUDIO (MP3)";
+            this.toolTip1.SetToolTip(this.label_TITULO_CONV, resources.GetString("label_TITULO_CONV.ToolTip"));
             // 
             // botao_converter
             // 
+            resources.ApplyResources(this.botao_converter, "botao_converter");
             this.botao_converter.BackColor = System.Drawing.Color.SpringGreen;
-            this.botao_converter.Location = new System.Drawing.Point(206, 32);
             this.botao_converter.Name = "botao_converter";
-            this.botao_converter.Size = new System.Drawing.Size(134, 20);
-            this.botao_converter.TabIndex = 17;
-            this.botao_converter.Text = "CONVERTER";
+            this.toolTip1.SetToolTip(this.botao_converter, resources.GetString("botao_converter.ToolTip"));
             this.botao_converter.UseVisualStyleBackColor = false;
             this.botao_converter.Click += new System.EventHandler(this.Botao_converter);
             // 
             // dOWNLOADToolStripMenuItem
             // 
+            resources.ApplyResources(this.dOWNLOADToolStripMenuItem, "dOWNLOADToolStripMenuItem");
             this.dOWNLOADToolStripMenuItem.Name = "dOWNLOADToolStripMenuItem";
-            this.dOWNLOADToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // cONVERTERToolStripMenuItem
             // 
+            resources.ApplyResources(this.cONVERTERToolStripMenuItem, "cONVERTERToolStripMenuItem");
             this.cONVERTERToolStripMenuItem.Name = "cONVERTERToolStripMenuItem";
-            this.cONVERTERToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // sOBREToolStripMenuItem
             // 
+            resources.ApplyResources(this.sOBREToolStripMenuItem, "sOBREToolStripMenuItem");
             this.sOBREToolStripMenuItem.Name = "sOBREToolStripMenuItem";
-            this.sOBREToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // GRUPO_SOBRE
             // 
+            resources.ApplyResources(this.GRUPO_SOBRE, "GRUPO_SOBRE");
             this.GRUPO_SOBRE.Controls.Add(this.linkLabel1);
             this.GRUPO_SOBRE.Controls.Add(this.linkLabel_videolibrary);
             this.GRUPO_SOBRE.Controls.Add(this.button_atualizar);
             this.GRUPO_SOBRE.Controls.Add(this.label_sobre2);
             this.GRUPO_SOBRE.Controls.Add(this.label_sobre1);
             this.GRUPO_SOBRE.Controls.Add(this.linkLabel_github);
-            this.GRUPO_SOBRE.Location = new System.Drawing.Point(387, 27);
             this.GRUPO_SOBRE.Name = "GRUPO_SOBRE";
-            this.GRUPO_SOBRE.Size = new System.Drawing.Size(346, 117);
-            this.GRUPO_SOBRE.TabIndex = 21;
             this.GRUPO_SOBRE.TabStop = false;
+            this.toolTip1.SetToolTip(this.GRUPO_SOBRE, resources.GetString("GRUPO_SOBRE.ToolTip"));
             // 
             // button_atualizar
             // 
-            this.button_atualizar.Location = new System.Drawing.Point(226, 87);
+            resources.ApplyResources(this.button_atualizar, "button_atualizar");
             this.button_atualizar.Name = "button_atualizar";
-            this.button_atualizar.Size = new System.Drawing.Size(114, 24);
-            this.button_atualizar.TabIndex = 3;
-            this.button_atualizar.Text = "Verificar Atualização";
+            this.toolTip1.SetToolTip(this.button_atualizar, resources.GetString("button_atualizar.ToolTip"));
             this.button_atualizar.UseVisualStyleBackColor = true;
             this.button_atualizar.Click += new System.EventHandler(this.button_atualizar_Click);
             // 
             // label_sobre2
             // 
-            this.label_sobre2.AutoSize = true;
-            this.label_sobre2.Location = new System.Drawing.Point(256, 16);
+            resources.ApplyResources(this.label_sobre2, "label_sobre2");
             this.label_sobre2.Name = "label_sobre2";
-            this.label_sobre2.Size = new System.Drawing.Size(74, 13);
-            this.label_sobre2.TabIndex = 4;
-            this.label_sobre2.Text = "Dependência:";
+            this.toolTip1.SetToolTip(this.label_sobre2, resources.GetString("label_sobre2.ToolTip"));
             // 
             // label_sobre1
             // 
-            this.label_sobre1.AutoSize = true;
-            this.label_sobre1.Location = new System.Drawing.Point(6, 16);
+            resources.ApplyResources(this.label_sobre1, "label_sobre1");
             this.label_sobre1.Name = "label_sobre1";
-            this.label_sobre1.Size = new System.Drawing.Size(137, 13);
-            this.label_sobre1.TabIndex = 1;
-            this.label_sobre1.Text = "Criado por: Daniel Svoboda\r\n";
+            this.toolTip1.SetToolTip(this.label_sobre1, resources.GetString("label_sobre1.ToolTip"));
             // 
             // label_sobre3
             // 
-            this.label_sobre3.AutoSize = true;
-            this.label_sobre3.Location = new System.Drawing.Point(401, 264);
+            resources.ApplyResources(this.label_sobre3, "label_sobre3");
             this.label_sobre3.Name = "label_sobre3";
-            this.label_sobre3.Size = new System.Drawing.Size(135, 13);
-            this.label_sobre3.TabIndex = 18;
-            this.label_sobre3.Text = "LOCAL SALVAR FFMPEG:";
+            this.toolTip1.SetToolTip(this.label_sobre3, resources.GetString("label_sobre3.ToolTip"));
             // 
             // button_restaurar_padrao
             // 
-            this.button_restaurar_padrao.Location = new System.Drawing.Point(636, 264);
+            resources.ApplyResources(this.button_restaurar_padrao, "button_restaurar_padrao");
             this.button_restaurar_padrao.Name = "button_restaurar_padrao";
-            this.button_restaurar_padrao.Size = new System.Drawing.Size(97, 24);
-            this.button_restaurar_padrao.TabIndex = 19;
-            this.button_restaurar_padrao.Text = "Restaurar padrão";
+            this.toolTip1.SetToolTip(this.button_restaurar_padrao, resources.GetString("button_restaurar_padrao.ToolTip"));
             this.button_restaurar_padrao.UseVisualStyleBackColor = true;
             this.button_restaurar_padrao.Click += new System.EventHandler(this.button1_Click);
             // 
             // button_local_ffmpeg
             // 
-            this.button_local_ffmpeg.Location = new System.Drawing.Point(708, 242);
+            resources.ApplyResources(this.button_local_ffmpeg, "button_local_ffmpeg");
             this.button_local_ffmpeg.Name = "button_local_ffmpeg";
-            this.button_local_ffmpeg.Size = new System.Drawing.Size(25, 20);
-            this.button_local_ffmpeg.TabIndex = 20;
-            this.button_local_ffmpeg.Text = "...";
+            this.toolTip1.SetToolTip(this.button_local_ffmpeg, resources.GetString("button_local_ffmpeg.ToolTip"));
             this.button_local_ffmpeg.UseVisualStyleBackColor = true;
             this.button_local_ffmpeg.Click += new System.EventHandler(this.button_local_ffmpeg_Click);
             // 
             // textBox_LocalFfmpeg
             // 
-            this.textBox_LocalFfmpeg.Enabled = false;
-            this.textBox_LocalFfmpeg.Location = new System.Drawing.Point(402, 242);
+            resources.ApplyResources(this.textBox_LocalFfmpeg, "textBox_LocalFfmpeg");
             this.textBox_LocalFfmpeg.Name = "textBox_LocalFfmpeg";
-            this.textBox_LocalFfmpeg.Size = new System.Drawing.Size(300, 20);
-            this.textBox_LocalFfmpeg.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.textBox_LocalFfmpeg, resources.GetString("textBox_LocalFfmpeg.ToolTip"));
             // 
             // menuStrip1
             // 
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dOWNLOADToolStripMenuItem1,
             this.cONVERTERToolStripMenuItem1,
             this.sOBREToolStripMenuItem1});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(775, 24);
-            this.menuStrip1.TabIndex = 22;
-            this.menuStrip1.Text = "menuStrip1";
+            this.toolTip1.SetToolTip(this.menuStrip1, resources.GetString("menuStrip1.ToolTip"));
             // 
             // dOWNLOADToolStripMenuItem1
             // 
+            resources.ApplyResources(this.dOWNLOADToolStripMenuItem1, "dOWNLOADToolStripMenuItem1");
             this.dOWNLOADToolStripMenuItem1.Name = "dOWNLOADToolStripMenuItem1";
-            this.dOWNLOADToolStripMenuItem1.Size = new System.Drawing.Size(87, 20);
-            this.dOWNLOADToolStripMenuItem1.Text = "DOWNLOAD";
             this.dOWNLOADToolStripMenuItem1.Click += new System.EventHandler(this.dOWNLOADToolStripMenuItem1_Click_1);
             // 
             // cONVERTERToolStripMenuItem1
             // 
+            resources.ApplyResources(this.cONVERTERToolStripMenuItem1, "cONVERTERToolStripMenuItem1");
             this.cONVERTERToolStripMenuItem1.Name = "cONVERTERToolStripMenuItem1";
-            this.cONVERTERToolStripMenuItem1.Size = new System.Drawing.Size(83, 20);
-            this.cONVERTERToolStripMenuItem1.Text = "CONVERTER";
             this.cONVERTERToolStripMenuItem1.Click += new System.EventHandler(this.cONVERTERToolStripMenuItem1_Click);
             // 
             // sOBREToolStripMenuItem1
             // 
+            resources.ApplyResources(this.sOBREToolStripMenuItem1, "sOBREToolStripMenuItem1");
             this.sOBREToolStripMenuItem1.Name = "sOBREToolStripMenuItem1";
-            this.sOBREToolStripMenuItem1.Size = new System.Drawing.Size(54, 20);
-            this.sOBREToolStripMenuItem1.Text = "SOBRE";
             this.sOBREToolStripMenuItem1.Click += new System.EventHandler(this.sOBREToolStripMenuItem1_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(775, 329);
             this.Controls.Add(this.label_sobre3);
             this.Controls.Add(this.GRUPO_SOBRE);
             this.Controls.Add(this.button_restaurar_padrao);
@@ -436,12 +355,11 @@
             this.Controls.Add(this.textBox_LocalFfmpeg);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Youtube Download";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
+            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_botaoYoutube)).EndInit();
             this.GRUPO_DOWNLOAD.ResumeLayout(false);
             this.GRUPO_DOWNLOAD.PerformLayout();
