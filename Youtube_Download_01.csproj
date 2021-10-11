@@ -8,7 +8,7 @@
     <ProjectGuid>{E20EBC2C-49C8-40A1-A5C7-FBE441EE0480}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Youtube_Download</RootNamespace>
-    <AssemblyName>Youtube_Download</AssemblyName>
+    <AssemblyName>Youtube_Download_DSS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
