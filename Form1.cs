@@ -31,7 +31,7 @@ namespace Youtube_Download_01
         string diretorio_conv_out = "";
         string nome_do_titulo = "";
 
-        string versao = "1"; 
+        string versao = "2"; 
 
         byte[] outputBytes = null;      // "ffmpeg_empacotado_pra_viagem" descompactado
 
@@ -158,6 +158,12 @@ namespace Youtube_Download_01
         public async void Botao_baixar_async(object sender, EventArgs e)
         {
             progressBar1.Value = 0;
+
+            if (textBox_link_do_youtube.Text == "")
+            {
+                MessageBox.Show("Por favor, cole um link para poder baixar!");
+                return;
+            }
 
             Nome_Titulo();     // Chama a função de reconhecer o nome do vídeo 
          

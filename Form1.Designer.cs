@@ -42,6 +42,7 @@
             this.linkLabel_colar = new System.Windows.Forms.LinkLabel();
             this.linkLabel_github = new System.Windows.Forms.LinkLabel();
             this.linkLabel_videolibrary = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.escolher_conv_input = new System.Windows.Forms.Button();
             this.GRUPO_DOWNLOAD = new System.Windows.Forms.GroupBox();
             this.GRUPO_CONVERTER = new System.Windows.Forms.GroupBox();
@@ -64,7 +65,6 @@
             this.dOWNLOADToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cONVERTERToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sOBREToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_botaoYoutube)).BeginInit();
             this.GRUPO_DOWNLOAD.SuspendLayout();
             this.GRUPO_CONVERTER.SuspendLayout();
@@ -196,6 +196,18 @@
             this.linkLabel_videolibrary.Text = "VideoLibrary";
             this.toolTip1.SetToolTip(this.linkLabel_videolibrary, "https://www.nuget.org/packages/VideoLibrary");
             this.linkLabel_videolibrary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(256, 45);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(69, 13);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Costura.Fody";
+            this.toolTip1.SetToolTip(this.linkLabel1, "https://www.nuget.org/packages/VideoLibrary");
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked_2);
             // 
             // escolher_conv_input
             // 
@@ -407,18 +419,6 @@
             this.sOBREToolStripMenuItem1.Size = new System.Drawing.Size(54, 20);
             this.sOBREToolStripMenuItem1.Text = "SOBRE";
             this.sOBREToolStripMenuItem1.Click += new System.EventHandler(this.sOBREToolStripMenuItem1_Click);
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(256, 45);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(69, 13);
-            this.linkLabel1.TabIndex = 6;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Costura.Fody";
-            this.toolTip1.SetToolTip(this.linkLabel1, "https://www.nuget.org/packages/VideoLibrary");
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked_2);
             // 
             // Form1
             // 
