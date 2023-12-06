@@ -1,35 +1,29 @@
 # Youtube Download DSS
+<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/print.png">
+<br><br>
 •DOWNLOAD: https://github.com/DanielSvoboda/Youtube_Download/raw/main/Youtube_Download_DSS.exe
 <br><br>
-Programa em C# windows forms .NET Framework 4.7.2
+Programa em C# windows forms .NET Framework 4.8
 <br><br>
 Com o objetivo de realizar:
 <br>
-  •Download de vídeos do youtube usando 'VideoLibrary'
+  •Download do youtube: audio, vídeos(com som e sem som)
   <br>
-  •Converção de vídeos em audios(mp3) utilizando o ffmpeg
+  •Unificação de vídeos com audios utilizando o ffmpeg
   <br>
   •Ser portátil, sem um instalador, tendo apenas 2 .exe:
   <br>O proprio Youtube_Download_DSS.exe e o ffmpeg.exe que é exportado para AppData\Local
   <br>
-  
+
 Depêndencia 
 ---------  
   <br>
-  •VideoLibrary https://www.nuget.org/packages/VideoLibrary
+  •Newtonsoft.Json https://www.nuget.org/packages/Newtonsoft.Json
   <br>
   •Costura.Fody https://www.nuget.org/packages/Costura.Fody
 <br><br><br>
   
-Print's
----------  
-Download<br>
-<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/1.png">
-<br>Converter<br>
-<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/2.png">
-<br>Sobre<br>
-<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/3.png">
-<br><br><br>
+
 
 FFmpeg
 ---------  

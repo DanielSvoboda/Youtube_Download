@@ -1,312 +1,454 @@
-﻿using System;
-using System.Windows.Forms;
-using VideoLibrary;
-using System.Net;
-using System.IO;
-using System.Drawing;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Compression;
-using Youtube_Download.Properties;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Policy;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web;
+using System.Windows.Forms;
 
-
-namespace Youtube_Download_01
+namespace Youtube_Download
 {
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
-            this.Size = new Size(383, 193);
-            Show();
-            //localFfmpeg = Settings.Default["LocalFfmpeg"].ToString();
-            //textBox_LocalFfmpeg.Text = Settings.Default["LocalFfmpeg"].ToString();    //textbox carrega do save
         }
 
+        string versao = "4";
 
-        //string novo_local = Settings.Default["LocalFfmpeg"].ToString();
+        string tempFolderPath = Path.Combine(Path.GetTempPath(), "YoutubeDownloadTempFolder");
 
-        bool formato = true; // True =MP3     False =MP4
-        bool MODO_FFMPEG = false;
-        string formato_extencao = "mp3 files (*.mp3)|*.mp3";
-        string diretorio_conv_in = "";
-        string diretorio_conv_out = "";
-        string nome_do_titulo = "";
+        string title;
+        string author;
+        int viewCount;
+        string thumbnail;
+        string shortDescription;
 
-        string versao = "3"; 
+        string mp3;
+        string video;
 
-        byte[] outputBytes = null;      // "ffmpeg_empacotado_pra_viagem" descompactado
+        byte[] outputBytesFFMPEG = null;      // "ffmpeg_empacotado_pra_viagem" descompactado
 
-        //MENU DOWNLOAD
-        private void dOWNLOADToolStripMenuItem1_Click_1(object sender, EventArgs e)
+
+        private void linkLabel_colar_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            GRUPO_DOWNLOAD.Visible = true;
-            GRUPO_CONVERTER.Visible = false;
-            GRUPO_SOBRE.Visible = false;
-
-            GRUPO_DOWNLOAD.Location = new Point(12, 27);
+            this.Enabled = false;
+            textBox_url.Text = Clipboard.GetText();
+            coletarDados();
+            this.Enabled = true;
         }
 
-
-        //MENU CONVERSOR
-        private void cONVERTERToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void button_baixarAudio_Click(object sender, EventArgs e)
         {
-            GRUPO_DOWNLOAD.Visible = false;
-            GRUPO_CONVERTER.Visible = true;
-            GRUPO_SOBRE.Visible = false;
-
-            GRUPO_CONVERTER.Location = new Point(12, 27);
-        }
-        
-
-        //MENU SOBRE
-        private void sOBREToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            GRUPO_DOWNLOAD.Visible = false;
-            GRUPO_CONVERTER.Visible = false;
-            GRUPO_SOBRE.Visible = true;
-
-            GRUPO_SOBRE.Location = new Point(12, 27);
+            this.Enabled = false;
+            BaixarArquivoAsync(mp3, "Audio");
         }
 
-
-        // Alterar entre os botões MP3 e MP4
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void button_baixarVideo_Click(object sender, EventArgs e)
         {
-            formato = true;
-            formato_extencao = "mp3 files (*.mp3)|*.mp3";
-        }
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            formato = false;
-            formato_extencao = "mp4 files (*.mp4)|*.mp4";
+            this.Enabled = false;
+            BaixarArquivoAsync(video, "Video");
         }
 
-        // Botão 'ABRIR O SITE YOUTUBE'
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void buttonbaixarVIdeoComAudio_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://youtube.com");
+            this.Enabled = false;
+            baixarVideoComAudio();
         }
 
-        // Botão Colar
-        private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        private async void coletarDados()
         {
-            textBox_link_do_youtube.Text = Clipboard.GetText();
-        }
-
-        // Botão abrir github
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://github.com/DanielSvoboda");
-        }
-
-        // Botão abrir Depencenia
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.nuget.org/packages/VideoLibrary");
-        }
-
-        private void linkLabel1_LinkClicked_2(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.nuget.org/packages/Costura.Fody");
-        }
-
-        // Botão modo de converção- em desenvolvimento
-        private void MODO_NORMAL_Click(object sender, EventArgs e)
-        {
-            MODO_FFMPEG = false;    // modo normal - false
-            MODO_NORMAL.Enabled = false;
-            MODO_AVANCADO.Enabled = true;
-        }
-
-        // Botão modo de converção- em desenvolvimento
-        private void MODO_AVANCADO_Click(object sender, EventArgs e)
-        {
-            MODO_FFMPEG = true;     // modo avancado - true
-            MODO_NORMAL.Enabled = true;
-            MODO_AVANCADO.Enabled = false;
-        }
-
-        void Nome_Titulo()     // Função obter o titulo do vídeo
-        {
-            try
-            {   WebRequest solicitacao = HttpWebRequest.Create(textBox_link_do_youtube.Text);
-                WebResponse resposta;
-                resposta = solicitacao.GetResponse();
-                StreamReader sr = new StreamReader(resposta.GetResponseStream());
-                string entrada = sr.ReadToEnd();
-                int inicio = entrada.IndexOf("<title>") + 7; // apagar o começo  '<title>'
-                int bitis = entrada.Substring(inicio).IndexOf("</title>") - 10; // apaga o final' - youtube'
-                nome_do_titulo = entrada.Substring(inicio, bitis);
-                label_nomeDoVideo.Text = nome_do_titulo;
-
-                // remover caracteres invalidos na hora de salvar um arquivo no windows
-                nome_do_titulo = nome_do_titulo.Replace("\\", " ");                     // remove:  \
-                nome_do_titulo = nome_do_titulo.Replace("/", " ");                      // remove:  /
-                nome_do_titulo = nome_do_titulo.Replace(":", " ");                      // remove:  :
-                nome_do_titulo = nome_do_titulo.Replace("*", " ");                      // remove:  *
-                nome_do_titulo = nome_do_titulo.Replace("?", " ");                      // remove:  ?
-                nome_do_titulo = nome_do_titulo.Replace("\"", " ");                     // remove:  "
-                nome_do_titulo = nome_do_titulo.Replace("<", " ");                      // remove:  <
-                nome_do_titulo = nome_do_titulo.Replace(">", " ");                      // remove:  >
-                nome_do_titulo = nome_do_titulo.Replace("|", " ");                      // remove:  |
-            }
-            catch
-            {   MessageBox.Show("Ocorreu um erro ao entender o titulo do vídeo!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);            }
-        }
-
-
-        //Botão Baixar
-        public async void Botao_baixar_async(object sender, EventArgs e)
-        {
-            progressBar1.Value = 0;
-
-            if (textBox_link_do_youtube.Text == "")
+            if (!Uri.TryCreate(textBox_url.Text, UriKind.Absolute, out var uri))
             {
-                MessageBox.Show("Por favor, cole um link para poder baixar!");
+                MessageBox.Show(textBox_url.Text+"\nNão é um link válido, insira um link do youtube");
+                textBox_url.Text = "";
                 return;
             }
 
-            Nome_Titulo();     // Chama a função de reconhecer o nome do vídeo 
-         
-            SaveFileDialog sfd = new SaveFileDialog();  // tela escolha de diretorio para salvar
-            sfd.FileName = nome_do_titulo;              // nome do arquivo é igual ao nome do vídeo(corrigido)
-            sfd.Filter = formato_extencao;              // exibe apenas .mp3 ou .mp4, conforme escolhido
-            sfd.Title = "Escolha um local para salvar";
-            sfd.ValidateNames = true;
+            title = "";
+            author = "";
+            viewCount = 0;
+            thumbnail = "";
+            shortDescription = "";
+            mp3 = "";
+            video = "";
+            progressBar1.Value = 0;
+
+            // Baixar o conteúdo do script do YouTube
+            WebClient webClient = new WebClient();
+            webClient.Encoding = Encoding.UTF8;
+            string scriptUrl = "https://www.youtube.com/iframe_api";
+            string scriptContent = webClient.DownloadString(scriptUrl);
+            string signatureTimestamp = "";
+
+            // Extrair a sequência da versão do script
+            var nun_inicio2 = scriptContent.IndexOf("player");
+            var nun_final = scriptContent.IndexOf("www-widgetapi", nun_inicio2 + 1); // Procura a próxima ocorrência de "www-widgetapi" após o início
+
+            // Corta o conteúdo entre as duas ocorrências
+            var sequenciaVersao = scriptContent.Substring(nun_inicio2 + 8, nun_final - (nun_inicio2 + 10));
+
+            Console.WriteLine($"Valor de sequenciaVersao: {sequenciaVersao}");
+
+            // Construir a nova URL e baixar o conteúdo
+            string novaUrl = $"https://www.youtube.com/s/player/{sequenciaVersao}/player_ias.vflset/pt_BR/base.js";
+            string novoConteudo = webClient.DownloadString(novaUrl);
+
+            // Procurar "signatureTimestamp" e obter o valor
+            Match match = Regex.Match(novoConteudo, @"signatureTimestamp:(\d+)");
+            if (match.Success)
             {
-                if (sfd.ShowDialog() == DialogResult.OK)
+                signatureTimestamp = match.Groups[1].Value;
+                Console.WriteLine($"Valor de signatureTimestamp: {signatureTimestamp}");
+            }
+            else
+            {
+                Console.WriteLine("Não foi possível encontrar signatureTimestamp.");
+            }
+
+            //Corta o conteudo e pega o INNERTUBE_API_KEY
+            var html_original = new WebClient().DownloadString(textBox_url.Text);
+            var nun_inicio = html_original.IndexOf("INNERTUBE_API_KEY");
+            var INNERTUBE_API_KEY = html_original.Substring(nun_inicio + 20, 39);
+            Console.WriteLine($"INNERTUBE_API_KEY: {INNERTUBE_API_KEY}");
+
+            //Corta o conteudo e pega o INNERTUBE_CLIENT_VERSION
+            nun_inicio = html_original.IndexOf("INNERTUBE_CLIENT_VERSION");
+            var INNERTUBE_CLIENT_VERSION = html_original.Substring(nun_inicio + 27, 16);
+            Console.WriteLine($"INNERTUBE_CLIENT_VERSION: {INNERTUBE_CLIENT_VERSION}");
+
+            //Corta o conteudo e pega o videoId
+            nun_inicio = html_original.IndexOf("videoDetails\":{\"videoId");
+            var videoId = html_original.Substring(nun_inicio + 26, 11);
+            Console.WriteLine($"videoId: {videoId}");
+
+            var url = "https://youtubei.googleapis.com/youtubei/v1/player?key=" + INNERTUBE_API_KEY;
+            var client = new HttpClient();
+
+            var postData = new
+            {
+                videoId = videoId,
+                racyCheckOk = true,
+                contentCheckOk = true,
+
+                context = new
                 {
-                    var yt = YouTube.Default;
-                    var link_video = await yt.GetVideoAsync(textBox_link_do_youtube.Text);
-                    string diretorio_nome_mp3 = sfd.FileName;                                                    //diretorio/nome.mp3
-                    string diretorio_nome_mp4 = sfd.FileName.Remove(sfd.FileName.Length - 1) + "4";              //diretorio/nome.mp4
-                    string diretorio_nome_mp4_temp = sfd.FileName.Remove(sfd.FileName.Length - 4) + "_temp.mp4"; //diretorio/nome_temp.mp4
-
-                    
-                    if (formato == true)    //se formato true=mp3   salva temp.MP4, converte e apagar temp.MP4
+                    client = new
                     {
-                        File.WriteAllBytes(diretorio_nome_mp4_temp, await link_video.GetBytesAsync());  //salva _temp.mp4
-                        converter_video_para_mp3(diretorio_nome_mp4_temp, diretorio_nome_mp3);          //converte temp.mp4 para mp3
-                        File.Delete(diretorio_nome_mp4_temp);                                           //Deleta _temp.mp4
-                    }
-                    else                    //se formato false(MP4)    Salva arquivo nome.mp4  
+                        hl = "en",
+                        clientName = "WEB",
+                        clientVersion = INNERTUBE_CLIENT_VERSION,
+                        mainAppWebInfo = new
+                        {
+                            graftUrl = "/watch?v=" + videoId
+                        }
+                    },
+
+                    thirdParty = new
                     {
-                        File.WriteAllBytes(diretorio_nome_mp4, await link_video.GetBytesAsync());
+                        embedUrl = "https://www.youtube.com"
+                    },
+                },
+
+                playbackContext = new
+                {
+                    contentPlaybackContext = new
+                    {
+                        signatureTimestamp = signatureTimestamp
                     }
-
-                    //float tamanho = (float)(new FileInfo(diretorio_nome_mp4).Length * 0.000001);   // tamanho em MB
-
-                    progressBar1.Value = 100;
-                    MessageBox.Show("Baixado com sucesso!", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    textBox_link_do_youtube.Text = "";
                 }
-                else
-                { MessageBox.Show("Escolha um local valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
-            }            
-        }
+            };
 
-
-        //ESCOLHER ARQUIVO PARA CONVERTER
-        private void escolher_conv_input_Click(object sender, EventArgs e)
-        {            
-            OpenFileDialog ofd = new OpenFileDialog();  // tela escolha de diretorio abrir
-            ofd.Title = "Escolha um arquivo de vídeo, para transformalo em audio (MP3)";
-            ofd.Filter = "Arquivos de vídeo |*.mp4;*.mov;*.m4a;*.3gp;*.3g2;*.mj2";  
-            if (ofd.ShowDialog() == DialogResult.OK)
+            var json2 = JsonConvert.SerializeObject(postData);
+            var content = new StringContent(json2, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content);
+            var responseContent = "";
+            if (response.IsSuccessStatusCode)
             {
-                label_TITULO_CONV.Text = ofd.SafeFileName;
-                diretorio_conv_in = ofd.FileName;
-                diretorio_conv_out = ofd.FileName.Remove(ofd.FileName.Length - 3) + "mp3"; 
+                Console.WriteLine("Solicitação POST bem-sucedida!");
+
+                responseContent = await response.Content.ReadAsStringAsync();
+                //Console.WriteLine(responseContent);
+            }
+            else
+            {
+                Console.WriteLine($"Erro na solicitação POST: {response.StatusCode}");
+            }
+
+            var json = JObject.Parse(responseContent);
+
+            title = json["videoDetails"]["title"].ToString();
+            author = json["videoDetails"]["author"].ToString();
+            viewCount = (int)json["videoDetails"]["viewCount"]; //nao funciona no shorts
+            thumbnail = json["videoDetails"]["thumbnail"].ToString();
+            //shortDescription = json["videoDetails"]["shortDescription"].ToString();
+
+            JObject conteudo_pagina = JObject.Parse(thumbnail);
+            var obj_video = from p in conteudo_pagina["thumbnails"]
+                            select (string)p["url"];     // links dos videos
+
+            string tempURLthumbnails = "";
+            foreach (var item in obj_video)
+            {
+                Console.WriteLine(item);
+                if (item != null)      // se o link nao for 'null'
+                {
+                    tempURLthumbnails = item;
+                    //temp.Split(new[] { "hqdefault.jpg" }, StringSplitOptions.None);                    
+                }
+            }
+            thumbnail = tempURLthumbnails;
+
+
+            label_titulo.Text = title;
+            label_autor_view.Text = author + "    " + viewCount.ToString("#,0") + " visualizações"; ;
+            pictureBox1.ImageLocation = thumbnail;
+
+
+            int maiorBitrateAudio = 0;
+            int maiorBitrateVideo = 0;
+
+            var streamingData = json["streamingData"].ToString();
+            JObject conteudo_pagina2 = JObject.Parse(streamingData);
+            var adaptiveFormats = conteudo_pagina2["adaptiveFormats"];
+            foreach (var format in adaptiveFormats)
+            {
+                Console.WriteLine("itag: " + format["itag"]);
+                Console.WriteLine("url: " + format["url"]);
+                Console.WriteLine("mimeType: " + format["mimeType"]);
+                Console.WriteLine("bitrate: " + format["bitrate"]);
+                Console.WriteLine("width: " + format["width"]);
+                Console.WriteLine("height: " + format["height"]);
+                Console.WriteLine("lastModified: " + format["lastModified"]);
+                Console.WriteLine("quality: " + format["quality"]);
+                Console.WriteLine("fps: " + format["fps"]);
+                Console.WriteLine("qualityLabel: " + format["qualityLabel"]);
+                Console.WriteLine("projectionType: " + format["projectionType"]);
+                Console.WriteLine("audioQuality: " + format["audioQuality"]);
+                Console.WriteLine("approxDurationMs: " + format["approxDurationMs"]);
+                Console.WriteLine("audioSampleRate: " + format["audioSampleRate"]);
+                Console.WriteLine("audioChannels: " + format["audioChannels"]);
+                Console.WriteLine("loudnessDb: " + format["loudnessDb"]);
+
+                Console.WriteLine("signatureCipher: " + format["signatureCipher"]);
+
+                Console.WriteLine();
+
+                // URL do melhor audio (maior bitrate)
+                if (format["audioQuality"] != null && format["audioQuality"].ToString() != "")
+                {
+                    int bitrate = int.Parse(format["bitrate"].ToString());
+                    if (bitrate > maiorBitrateAudio)
+                    {
+                        maiorBitrateAudio = bitrate;
+                        if (format["signatureCipher"] == null)
+                        {
+                            mp3 = format["url"].ToString();
+                            Console.WriteLine("mp3Normal:" + mp3);
+                        }
+                        else
+                        {
+                            mp3 = decodeCipher.DecodeCipher(format["signatureCipher"].ToString());
+                            Console.WriteLine("mp3Cipher:" + mp3);
+                        }
+                    }
+                }
+
+                // URL do melhor vídeo (maior bitrate)
+                if (format["audioQuality"] == null)
+                {
+                    int bitrate = int.Parse(format["bitrate"].ToString());
+                    if (bitrate > maiorBitrateVideo)
+                    {
+                        maiorBitrateVideo = bitrate;
+                        if (format["signatureCipher"] == null)
+                        {
+                            video = format["url"].ToString();
+                            Console.WriteLine("videoNormal:" + video);
+                        }
+                        else
+                        {
+                            video = decodeCipher.DecodeCipher(format["signatureCipher"].ToString());
+                            Console.WriteLine("videoNormal:" + video);
+                        }
+                    }
+                }
             }
         }
 
 
-        // FUNÇÃO CONVERTE VIDEO EM AUDIO
-        public void converter_video_para_mp3(string entrada, string saida)
+
+        private async Task BaixarArquivoAsync(string url, string fileType)
+        {
+            string urlDecodificada = HttpUtility.UrlDecode(url);
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            if (fileType == "Video")
+            {
+                saveFileDialog.Filter = "Arquivos de Vídeo (*.mp4)|*.mp4";
+                saveFileDialog.Title = "Escolha o local para salvar o arquivo de Vídeo";
+            }
+            else if (fileType == "Audio")
+            {
+                saveFileDialog.Filter = "Arquivos de Áudio (*.mp3)|*.mp3";
+                saveFileDialog.Title = "Escolha o local para salvar o arquivo de áudio";
+            }
+
+            saveFileDialog.FileName = LimparNomeArquivo(label_titulo.Text);
+
+            // Mostrar o diálogo e verificar se o usuário clicou em "Salvar"
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Obter o caminho escolhido pelo usuário
+                string outputPath = saveFileDialog.FileName;
+
+                // Criar uma instância do Downloader
+                var downloader = new Downloader(urlDecodificada, outputPath, tempFolderPath, progressBar1);
+
+                try
+                {
+                    // Baixar o arquivo assincronamente
+                    await downloader.DownloadFileAsync();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao iniciar o download: {ex.Message}");
+                }
+
+                this.Enabled = true;
+                MessageBox.Show("Download concluído!");
+            }
+        }
+
+
+
+        private async void baixarVideoComAudio() // e unifica com ffmpeg
+        {
+            string tempVideoPath = "";
+            string tempAudioPath = "";
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Arquivos de Vídeo (*.mp4)|*.mp4";
+                saveFileDialog.Title = "Escolha o local para salvar o arquivo de Vídeo";
+                saveFileDialog.FileName = LimparNomeArquivo(label_titulo.Text);
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string urlDecodificadaVideo = HttpUtility.UrlDecode(video);
+                    string urlDecodificadaAudio = HttpUtility.UrlDecode(mp3);
+
+                    // Baixe o vídeo de forma assíncrona
+                    var videoDownloader = new Downloader(urlDecodificadaVideo, Path.Combine(tempFolderPath, "temp_video.mp4"), tempFolderPath, progressBar1);
+                    await videoDownloader.DownloadFileAsync();
+
+                    // Baixe o audio de forma assíncrona
+                    var audioDownloader = new Downloader(urlDecodificadaAudio, Path.Combine(tempFolderPath, "temp_audio.mp3"), tempFolderPath, progressBar1);
+                    await audioDownloader.DownloadFileAsync();
+
+                    // Unifica o vídeo e áudio com ffmpeg
+                    tempVideoPath = Path.Combine(tempFolderPath, "temp_video.mp4");
+                    tempAudioPath = Path.Combine(tempFolderPath, "temp_audio.mp3");
+                    string saidaFinalPath = Path.Combine(tempFolderPath, "saida_final.mp4");
+                    await unificar_video_e_audio(tempVideoPath, tempAudioPath, saidaFinalPath);
+
+                    // Mova o arquivo final para o local escolhido pelo usuário
+                    File.Move(saidaFinalPath, saveFileDialog.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}");
+            }
+            finally
+            {
+                this.Enabled = true;
+                MessageBox.Show("Download concluído!");
+
+
+                // Deleta os arquivos temporarios
+                File.Delete(tempVideoPath);
+                File.Delete(tempAudioPath);
+            }
+        }
+
+
+
+        public async Task unificar_video_e_audio(string entradaVideo, string entradaAudio, string saida)
         {
             var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var localFfmpeg = Path.Combine(localAppData, "ffmpeg.exe");
-            
-            if (File.Exists(localFfmpeg))    //o arquivo ffmpeg.exe já existe no local selecionado? 
+
+            if (File.Exists(localFfmpeg))
             {
-                string aspa = "\"";
-                string comando = " -i " + aspa + entrada + aspa + " -f mp3 " + aspa + saida + aspa;
+                string comando = $"-i \"{entradaVideo}\" -i \"{entradaAudio}\" -c:v copy -c:a aac -strict experimental \"{saida}\"";
 
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.CreateNoWindow = true;   // true = invisivel   false=mostra o console preto
-                startInfo.UseShellExecute = false; // só funciona false
-                startInfo.FileName = localFfmpeg;
-                //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.Arguments = comando;
-
-                startInfo.RedirectStandardOutput = true;
-                startInfo.RedirectStandardError = true;
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    FileName = localFfmpeg,
+                    Arguments = comando,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
 
                 using (Process exeProcess = Process.Start(startInfo))
                 {
-                    string error = exeProcess.StandardError.ReadToEnd();
-                    string output = exeProcess.StandardError.ReadToEnd();
-                    exeProcess.WaitForExit();                    
-                    //MessageBox.Show("ERROR:" + error); 
-                }                
-            }
-            else
-            {
-                desempacotador_GZipStream();
-            }
-        }
+                    string error = await exeProcess.StandardError.ReadToEndAsync();
+                    string output = await exeProcess.StandardOutput.ReadToEndAsync();
 
+                    await Task.Run(() => exeProcess.WaitForExit()); // Aguardar a conclusão do processo em uma tarefa separada
 
-        private void Botao_converter(object sender, EventArgs e)
-        {
-            var entrada = diretorio_conv_in;
-            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var localFfmpeg = Path.Combine(localAppData, "ffmpeg.exe");
-
-            if (File.Exists(localFfmpeg))    //o arquivo ffmpeg.exe já existe no local? 
-            {
-                if (entrada != "")
-                {
-                    SaveFileDialog ofd2 = new SaveFileDialog();  // tela escolha de diretorio salvar
-                    ofd2.Title = "Escolha um local para salvar o audio (MP3)";
-                    ofd2.Filter = "mp3 files (*.mp3)|*.mp3";
-                    ofd2.FileName = diretorio_conv_out;
-
-                    if (ofd2.ShowDialog() == DialogResult.OK)
+                    // Verificar erros ou lidar com a saída, se necessário
+                    if (!string.IsNullOrEmpty(error))
                     {
-                        converter_video_para_mp3(entrada, ofd2.FileName);
-                        MessageBox.Show("Arquivo convertido! \n" + label_TITULO_CONV.Text, "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        label_TITULO_CONV.Text = "CONVERTER ARQUIVOS DE VÍDEO EM AUDIO (MP3)";
+                        //MessageBox.Show("ERROR:" + error);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Escolha um local valido!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
             }
             else
             {
                 desempacotador_GZipStream();
             }
         }
+
 
 
         public void desempacotador_GZipStream()     //função Decompress desempacotador_GZipStream
         {
-            byte[] inputBytes = Youtube_Download.Properties.Resources.ffmpeg_empacotado_pra_viagem;
+            byte[] inputBytes = Properties.Resources.ffmpeg_empacotado_pra_viagem;
 
             using (var inputStream = new MemoryStream(inputBytes))
             using (var gZipStream = new GZipStream(inputStream, CompressionMode.Decompress))
             using (var outputStream = new MemoryStream())
             {
                 gZipStream.CopyTo(outputStream);
-                outputBytes = outputStream.ToArray();
+                outputBytesFFMPEG = outputStream.ToArray();
 
                 var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 var localFfmpeg = Path.Combine(localAppData, "ffmpeg.exe");
 
-                File.WriteAllBytes(localFfmpeg, outputBytes); // salva em localAppData
-             }
+                File.WriteAllBytes(localFfmpeg, outputBytesFFMPEG); // salva em localAppData
+            }
+        }
+
+
+
+        private string LimparNomeArquivo(string nome)
+        {
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            return new string(nome.Where(c => !invalidChars.Contains(c)).ToArray());
         }
 
 
@@ -321,81 +463,43 @@ namespace Youtube_Download_01
             StreamReader sr = new StreamReader(resposta.GetResponseStream());
             string conteudo = sr.ReadToEnd();
 
-            if(conteudo != versao)
-            {              
+            if (conteudo != versao)
+            {
                 DialogResult dialogResult = MessageBox.Show("Existe uma atualização! \n" +
                     "Vamos atualizar agora?", "Atualização Disponivel", MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
                 {
                     var dir = Directory.GetCurrentDirectory();
-                    var nome_antigo = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe"; 
+                    var nome_antigo = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
                     var nome_novo = Directory.GetCurrentDirectory() + @"\Youtube_Download_DSS" + conteudo + ".exe";
 
                     var wClient = new WebClient();
                     wClient.DownloadFile(url_exe, nome_novo);
 
                     MessageBox.Show("Download concluído!");
-            
-                    // inicia uma therd fecha o programa, espera 3 segundos, apaga o antigo, renomeia o novo com o mesmo nome do antigo e abre ele  :)
+
+                    //inicia uma therd fecha o programa, espera 3 segundos, apaga o antigo, renomeia o novo com o mesmo nome do antigo e abre ele:)
                     Process.Start(new ProcessStartInfo()
                     {
-                        Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + dir + "\\"+ nome_antigo + "\"" + " & ren \"" + nome_novo + "\"" + " " + "\"" + nome_antigo + "\"" + " & start /d " + "\"" + dir + "\"" + " " + nome_antigo ,
+                        Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + dir + "\\" + nome_antigo + "\"" + " & ren \"" + nome_novo + "\"" + " " + "\"" + nome_antigo + "\"" + " & start /d " + "\"" + dir + "\"" + " " + nome_antigo,
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
                         FileName = "cmd.exe"
-                    });;
+                    }); ;
 
                     Application.Exit();
-
-                    //var dialog = new SaveFileDialog();
-                    //dialog.Filter = "Arquivo (*.exe)|*.exe";
-                    //dialog.Title = "Escolha um local para salvar a nova verção";
-                    //dialog.FileName = "Youtube_Download_DSS" + conteudo;                    
-                    //{
-                    //    if (dialog.ShowDialog() == DialogResult.OK)
-                    //    {
-                    //        var wClient = new WebClient();
-                    //        wClient.DownloadFile(url_exe, dialog.FileName);
-                    //    }
-                    //}
                 }
-            } 
+            }
             else
             {
                 MessageBox.Show("Não existe atualização disponivel ;)");
             }
         }
 
-
-
-        //                   \/  Em desenvolvimento  \/
-        //      'localFfMpeg' será trocado por 'novo_local'  (usuario escolhe o local ffmpeg)
-        private void button1_Click(object sender, EventArgs e)
+        private void linkLabel_github_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string local2 = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string localFfMpeg = Path.Combine(local2, "ffmpeg.exe");
-
-            Settings.Default["LocalFfmpeg"] = localFfMpeg;
-            Settings.Default.Save();
-            Settings.Default.Upgrade();
-            textBox_LocalFfmpeg.Text = localFfMpeg;
-            //Application.Restart();
-        }
-
-
-        private void button_local_ffmpeg_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog ofd = new SaveFileDialog();  // tela escolha de diretorio salvar           
-            ofd.Filter = "exe files(*.exe)| *.exe";
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                textBox_LocalFfmpeg.Text = ofd.FileName;
-            }
-
-            Settings.Default["LocalFfmpeg"] = textBox_LocalFfmpeg.Text;
-            Settings.Default.Save();
-            Settings.Default.Upgrade();
+            System.Diagnostics.Process.Start("https://github.com/DanielSvoboda/Youtube_Download");
         }
     }
 }
