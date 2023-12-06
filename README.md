@@ -1,5 +1,5 @@
 # Youtube Download DSS
-<img width="300" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/print.png">
+<img width="380" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/print.png">
 <br><br>
 •DOWNLOAD: https://github.com/DanielSvoboda/Youtube_Download/raw/main/Youtube_Download_DSS.exe
 <br><br>
@@ -8,12 +8,16 @@ Programa em C# windows forms .NET Framework 4.8
 Com o objetivo de realizar:
 <br>
   •Download do youtube: audio, vídeos(com som e sem som)
+  <br><br>
+AUDIO : Somente o áudio do vídeo (.mp3)<br>
+VIDEO/AUDIO : Utiliza o ffmpeg para unificar e gerar um arquivo (.mp4)<br>
+SÓ O VIDEO : Não contem o áudio, somente o vídeo(.mp4)<br>
   <br>
-  •Unificação de vídeos com audios utilizando o ffmpeg
-  <br>
-  •Ser portátil, sem um instalador, tendo apenas 2 .exe:
+  •E ser portátil, sem um instalador, tendo apenas 2 .exe:
   <br>O proprio Youtube_Download_DSS.exe e o ffmpeg.exe que é exportado para AppData\Local
   <br>
+
+  
 
 Depêndencia 
 ---------  
@@ -24,8 +28,8 @@ Depêndencia
 <br><br><br>
   
 
-
-FFmpeg
+<details>
+<summary>FFmpeg</summary>
 ---------  
 - Esse programa usa o [FFmpeg](http://ffmpeg.org), uma estrutura de multimídia gratuita que é licenciada sob a [LGPLv2.1 license](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)  contendo vários codecs de áudio e vídeo, suportando tarefas de muxing, demuxing e transcodificação em muitos formatos de mídia.
 
