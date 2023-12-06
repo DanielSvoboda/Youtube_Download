@@ -1,8 +1,16 @@
 # Youtube Download DSS
 <img width="380" alt="portfolio_view" src="https://raw.githubusercontent.com/DanielSvoboda/Youtube_Download/main/print.png">
 <br><br>
-•DOWNLOAD: https://github.com/DanielSvoboda/Youtube_Download/raw/main/Youtube_Download_DSS.exe
+
+DOWNLOAD 
+---------  
+https://github.com/DanielSvoboda/Youtube_Download/raw/main/Youtube_Download_DSS.exe
+<br>Ou acesse em release: https://github.com/DanielSvoboda/Youtube_Download/releases
 <br><br>
+
+DETALHES 
+---------  
+
 Programa em C# windows forms .NET Framework 4.8
 <br><br>
 Com o objetivo de realizar:
@@ -15,9 +23,7 @@ SÓ O VIDEO : Não contem o áudio, somente o vídeo(.mp4)<br>
   <br>
   •E ser portátil, sem um instalador, tendo apenas 2 .exe:
   <br>O proprio Youtube_Download_DSS.exe e o ffmpeg.exe que é exportado para AppData\Local
-  <br>
-
-  
+  <br>  
 
 Depêndencia 
 ---------  
